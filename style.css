@@ -31,7 +31,6 @@ main {
   text-align: center;
 }
 
-/* Form-specific main styling */
 main form {
   max-width: 600px;
   margin: 0 auto;
@@ -93,9 +92,13 @@ a.button:hover {
   background-color: #a61d1d;
 }
 
-/* Full-width form buttons */
 form .button {
   width: 100%;
+}
+
+.button.secondary {
+  background: #555;
+  margin-left: 10px;
 }
 
 /* ===== Special Sections ===== */
@@ -128,8 +131,9 @@ input[type="checkbox"] {
 }
 
 /* ===== Image Preview ===== */
-#preview {
-  display: none;
+#preview,
+#photoPreview {
+  display: block;
   max-width: 100%;
   border-radius: 8px;
   margin-top: 10px;
@@ -145,41 +149,30 @@ footer {
   text-align: center;
 }
 
-/* ===== Responsive Adjustments ===== */
-@media (max-width: 768px) {
-  header img {
-    max-height: 100px;
-  }
-  
-  main {
-    padding: 20px 15px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .button, a.button {
-    padding: 12px 20px;
-  }
+/* ===== Responsive Gallery Carousel ===== */
+.gallery {
+  display: flex;
+  overflow-x: auto;
+  gap: 16px;
+  padding: 10px 0;
+  scroll-snap-type: x mandatory;
 }
 
-@media (max-width: 480px) {
-  header h1 {
-    font-size: 22px;
-  }
-  
-  input[type="text"],
-  input[type="tel"],
-  input[type="file"],
-  select,
-  textarea {
-    padding: 8px;
-    font-size: 14px;
-  }
+.gallery img {
+  flex: 0 0 auto;
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  scroll-snap-align: center;
+  transition: transform 0.3s ease;
 }
 
-/* Payment QR Section */
+.gallery img:hover {
+  transform: scale(1.03);
+}
+
+/* ===== Payment Section ===== */
 .payment-instructions {
   margin: 25px 0;
   padding: 15px;
@@ -223,22 +216,16 @@ footer {
   font-size: 1.1em;
 }
 
-.hint {
-  font-size: 0.9em;
-  color: #666;
-  margin-top: 5px;
-}
-
-/* Phone input specific styling */
-input[type="tel"] {
-  font-family: monospace; /* Makes numbers align better */
-  letter-spacing: 0.5px;
-}
-
+/* ===== Miscellaneous ===== */
 .hint {
   font-size: 0.85em;
   color: #666;
   margin-top: 5px;
+}
+
+input[type="tel"] {
+  font-family: monospace;
+  letter-spacing: 0.5px;
 }
 
 .submission-details {
@@ -254,16 +241,6 @@ input[type="tel"] {
   border-bottom: 1px solid #eee;
 }
 
-.button.secondary {
-  background: #555;
-  margin-left: 10px;
-}
-
-#photoPreview {
-  border: 2px solid #ddd;
-  margin: 10px 0;
-}
-
 .whatsapp-note {
   background: #f0f8ff;
   padding: 15px;
@@ -271,6 +248,66 @@ input[type="tel"] {
   margin: 15px 0;
   border-left: 4px solid #25D366;
 }
+
 .whatsapp-note ol {
   padding-left: 20px;
+}
+
+/* ===== Floating WhatsApp Button (Optional) ===== */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  z-index: 100;
+}
+
+.whatsapp-float img {
+  width: 100%;
+  height: auto;
+}
+
+/* ===== Responsive Adjustments ===== */
+@media (max-width: 768px) {
+  header img {
+    max-height: 100px;
+  }
+
+  main {
+    padding: 20px 15px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .button, a.button {
+    padding: 12px 20px;
+  }
+
+  .gallery img {
+    width: 250px;
+    height: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 22px;
+  }
+
+  input[type="text"],
+  input[type="tel"],
+  input[type="file"],
+  select,
+  textarea {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .gallery img {
+    width: 200px;
+    height: 140px;
+  }
 }
