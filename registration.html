@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CURMA Registration</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CURUMA Registration</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
     <img src="Images/curuma_logo.png" alt="CURUMA Logo" />
-    <h1>CURMA Photography Contest 2025</h1>
+    <h1>CURUMA Photography Contest 2025</h1>
     <p>Organized by Central University of Rajasthan Malayali Association</p>
   </header>
 
@@ -17,184 +17,76 @@
     <form id="registrationForm">
       <div class="form-group">
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required />
+        <input id="name" type="text" name="name" required />
       </div>
 
       <div class="form-group">
-        <label for="enrollment">Enrollment Number:</label>
-        <input type="text" id="enrollment" name="enrollment" required />
+        <label for="regno">Registration Number:</label>
+        <input id="regno" type="text" name="regno" required />
       </div>
 
       <div class="form-group">
-        <label for="department">Department:</label>
-        <input type="text" id="department" name="department" required />
+        <label for="course">Course:</label>
+        <input id="course" type="text" name="course" required />
       </div>
 
       <div class="form-group">
         <label for="phone">Phone Number:</label>
-        <input type="tel" id="phone" name="phone" 
-               pattern="[\d\+ ]+" 
-               title="Only numbers, spaces, and + are allowed"
-               oninput="validatePhoneInput(this)"
-               required />
-        <p class="hint">Format: +91 1234567890 or 01234567890</p>
+        <input id="phone" type="tel" name="phone" required />
       </div>
 
       <div class="form-group">
-        <label for="state">Representing State:</label>
-        <select id="state" name="state" required>
-          <option value="">--Select State--</option>
-          <option value="Kerala">Kerala</option>
-          <option value="Tamil Nadu">Tamil Nadu</option>
-          <option value="Karnataka">Karnataka</option>
-          <option value="Andhra Pradesh">Andhra Pradesh</option>
-          <option value="Maharashtra">Maharashtra</option>
-          <option value="Delhi">Delhi</option>
-          <option value="Uttar Pradesh">Uttar Pradesh</option>
-        </select>
+        <label for="state">State:</label>
+        <input id="state" type="text" name="state" required />
       </div>
 
       <div class="form-group">
-        <label for="category">Photography Category:</label>
+        <label for="category">Category:</label>
         <select id="category" name="category" required>
+          <option value="">-- Select --</option>
           <option value="Single">Single</option>
-          <option value="Team">Team</option>
+          <option value="Series">Series</option>
         </select>
       </div>
 
       <div class="form-group">
-        <label for="instagram">Instagram ID:</label>
-        <input type="text" id="instagram" name="instagram" required />
+        <label for="email">Email:</label>
+        <input id="email" type="email" name="email" required />
       </div>
 
       <div class="form-group">
-        <label for="curaj">Are you a CURAJ student?</label>
-        <select id="curaj" name="curaj" required>
-          <option value="">--Select--</option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
+        <label for="txn_id">Transaction ID:</label>
+        <input id="txn_id" type="text" name="txn_id" required />
       </div>
 
       <div class="form-group">
-        <label for="paymentCode">UPI Transaction ID:</label>
-        <input type="text" 
-               id="paymentCode" 
-               name="paymentCode" 
-               pattern="[0-9]{12}"
-               title="12-digit numeric transaction ID"
-               minlength="12"
-               maxlength="12"
-               inputmode="numeric"
-               oninput="formatTransactionId(this)"
-               placeholder="509670287342"
-               required />
-        <p class="hint">Enter the 12-digit UPI transaction ID from your payment receipt</p>
+        <label for="caption">Caption:</label>
+        <textarea id="caption" name="caption" required></textarea>
       </div>
 
-      <div class="payment-instructions">
-        <h3>Payment Instructions</h3>
-        <div class="qr-container">
-          <img src="curuma_upi_qr.png" alt="Scan to pay ₹30" />
-          <div class="payment-details">
-            <p><strong>Amount:</strong> ₹30</p>
-            <p><strong>UPI ID:</strong> anirudhsargas@okhdfcbank</p>
-            <p><strong>Note:</strong> You'll receive a reference code after payment</p>
-          </div>
-        </div>
-      </div>
-
-      <button type="submit" class="button">Submit Registration</button>
+      <button type="submit">Register</button>
     </form>
   </main>
 
-  <footer>
-    &copy; 2025 CURMA – Central University of Rajasthan Malayali Association
-  </footer>
-
-  <!-- ✅ Updated Script Section -->
   <script>
-function formatTransactionId(input) {
-  input.value = input.value.replace(/\D/g, '');
-  if (input.value.length > 12) {
-    input.value = input.value.slice(0, 12);
-  }
-}
+    document.getElementById("registrationForm").addEventListener("submit", function(event) {
+      event.preventDefault();
 
-function validatePhoneInput(input) {
-  input.value = input.value.replace(/[^\d\+ ]/g, '');
-}
+      const name = encodeURIComponent(document.getElementById("name").value);
+      const regno = encodeURIComponent(document.getElementById("regno").value);
+      const course = encodeURIComponent(document.getElementById("course").value);
+      const phone = encodeURIComponent(document.getElementById("phone").value);
+      const state = encodeURIComponent(document.getElementById("state").value);
+      const category = encodeURIComponent(document.getElementById("category").value);
+      const email = encodeURIComponent(document.getElementById("email").value);
+      const txnId = encodeURIComponent(document.getElementById("txn_id").value);
+      const caption = encodeURIComponent(document.getElementById("caption").value);
 
-document.getElementById('registrationForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  document.getElementById('loading').style.display = 'flex';
+      const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeWAevBPFCQBfpy-OxrsF_pWqaVGGPUbCCiK2bsZSlgcKe0xg/viewform";
+      const queryParams = `?usp=pp_url&entry.1098090124=${name}&entry.85778097=${regno}&entry.243353803=${course}&entry.622587410=${phone}&entry.1436043087=${state}&entry.531112420=${category}&entry.1907613683=${email}&entry.663204125=${txnId}&entry.1744390438=${caption}`;
 
-  const formData = {
-    name: document.getElementById('name').value.trim(),
-    enrollment: document.getElementById('enrollment').value.trim(),
-    department: document.getElementById('department').value.trim(),
-    phone: document.getElementById('phone').value.trim(),
-    state: document.getElementById('state').value,
-    category: document.getElementById('category').value,
-    instagram: document.getElementById('instagram').value.trim(),
-    curaj: document.getElementById('curaj').value,
-    paymentCode: document.getElementById('paymentCode').value.trim(),
-    timestamp: new Date().toLocaleString()
-  };
-
-  // Step 1: Prefill Google Form
-  const googleFormURL = new URL("https://docs.google.com/forms/d/e/1FAIpQLSeWAevBPFCQBfpy-OxrsF_pWqaVGGPUbCCiK2bsZSlgcKe0xg/viewform");
-
-  googleFormURL.searchParams.set("entry.1098090124", formData.name);
-  googleFormURL.searchParams.set("entry.85778097", formData.enrollment);
-  googleFormURL.searchParams.set("entry.243353803", formData.department);
-  googleFormURL.searchParams.set("entry.622587410", formData.phone);
-  googleFormURL.searchParams.set("entry.1436043087", formData.state);
-  googleFormURL.searchParams.set("entry.531112420", formData.category);
-  googleFormURL.searchParams.set("entry.1907613683", formData.instagram);
-  googleFormURL.searchParams.set("entry.663204125", formData.paymentCode);
-  googleFormURL.searchParams.set("entry.1744390438", "GOOD"); // Optional remarks
-
-  // Step 2: Send to Google Sheets via Apps Script
-  const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL';
-
-  fetch(SCRIPT_URL, {
-    method: 'POST',
-    body: JSON.stringify(formData),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-  .then(res => res.json())
-  .then(result => {
-    // Step 3: WhatsApp message via webhook (replace with actual URL/API)
-    fetch('YOUR_WHATSAPP_WEBHOOK_URL', {
-      method: 'POST',
-      body: JSON.stringify({
-        phone: formData.phone,
-        message: `Hi ${formData.name}, your registration for CURMA 2025 is confirmed. Upload your photo now.`
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      window.location.href = formUrl + queryParams;
     });
-
-    // Step 4: Redirect to Form and then Upload Page
-    setTimeout(() => {
-      window.location.href = googleFormURL.toString(); // Step 4a: Redirect to Form
-    }, 1000);
-
-    setTimeout(() => {
-      window.location.href = "/photo_upload.html";     // Step 4b: Redirect to Upload Page
-    }, 4000); // delay to allow Google Form submission
-  })
-  .catch(err => {
-    console.error('Submission Error:', err);
-    alert('There was an error. Please try again.');
-    document.getElementById('loading').style.display = 'none';
-  });
-});
-</script>
-
+  </script>
 </body>
 </html>
