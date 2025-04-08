@@ -85,6 +85,7 @@ a.button {
   cursor: pointer;
   font-size: 16px;
   text-align: center;
+  margin: 20px
 }
 
 .button:hover,
@@ -98,7 +99,7 @@ form .button {
 
 .button.secondary {
   background: #555;
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 /* ===== Special Sections ===== */
