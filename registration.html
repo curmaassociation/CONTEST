@@ -4,37 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CURUMA Photography Contest – Registration</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      padding: 2rem;
-      max-width: 600px;
-      margin: auto;
-      background: #f9f9f9;
-    }
-    input, select, button {
-      width: 100%;
-      padding: 0.7rem;
-      margin: 0.5rem 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    button {
-      background: #007bff;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    #loading {
-      display: none;
-      color: green;
-      margin-top: 1rem;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-  <h2>CURUMA Photography Contest Registration</h2>
+  <header>
+    <img src="Images/curuma_logo.png" alt="CURUMA Logo">
+    <h2>CURUMA Photography Contest Registration</h2>
+    <p>Organized by Central University of Rajasthan Malayali Association</p>
+  </header>
 
   <form id="registrationForm">
     <input type="text" name="name" placeholder="Name" required />
@@ -89,6 +67,18 @@
       <option value="Yes">Yes</option>
       <option value="No">No</option>
     </select>
+
+    <div class="payment-instructions">
+        <h3>Payment Instructions</h3>
+        <div class="qr-container">
+          <img src="curuma_upi_qr.png" alt="Scan to pay ₹30" />
+          <div class="payment-details">
+            <p><strong>Amount:</strong> ₹30</p>
+            <p><strong>UPI ID:</strong> anirudhsargas@okhdfcbank</p>
+            <p><strong>Note:</strong> You'll receive a reference code after payment</p>
+          </div>
+        </div>
+      </div>
 
     <input type="text" name="paymentCode" placeholder="Payment Transaction Code" required />
 
