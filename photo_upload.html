@@ -4,10 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Upload Your Photo – CURUMA Photography Contest</title>
-  <link rel="stylesheet" href="/style.css"/>
-  <style>
-    /* (Same CSS styles as you posted — unchanged for brevity) */
-  </style>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <header>
@@ -74,30 +71,6 @@
     </form>
   </main>
 
-  <!-- Confirmation Modal -->
-  <div id="confirmationModal">
-    <div class="modal-content">
-      <h2>Ready to Submit?</h2>
-      <p>Your entry will be sent to CURUMA organizers via WhatsApp.</p>
-      <div id="submissionSummary"></div>
-
-      <div class="whatsapp-note">
-        <h3>📱 WhatsApp Submission Instructions</h3>
-        <ol>
-          <li><strong>Send</strong> the pre-filled message that appears</li>
-          <li><strong>Attach</strong> your photo in the next message</li>
-          <li><strong>Complete</strong> by sending both messages</li>
-        </ol>
-        <p style="font-size: 13px;">Note: You must manually attach your photo after sending the details</p>
-      </div>
-
-      <div class="form-actions">
-        <button id="cancelButton" class="button secondary">Cancel</button>
-        <button id="confirmSendButton" class="button">Send via WhatsApp</button>
-      </div>
-    </div>
-  </div>
-
   <footer>
     &copy; 2025 CURUMA – Central University of Rajasthan Malayali Association
   </footer>
@@ -158,61 +131,29 @@
           alert('Please complete all required fields');
           return;
         }
-        if (!photoInput.files[0]) {
-          alert('Please upload your contest photo');
-          return;
-        }
-        showConfirmationModal();
+        sendToGoogleForm();
       });
 
-      document.getElementById('cancelButton').addEventListener('click', function () {
-        document.getElementById('confirmationModal').style.display = 'none';
-      });
+      function sendToGoogleForm() {
+        const form = document.getElementById('uploadForm');
+        const formData = new FormData(form);
 
-      document.getElementById('confirmSendButton').addEventListener('click', sendToWhatsApp);
-
-      function showConfirmationModal() {
-        const summary = `
-          <p><strong>Name:</strong> ${document.getElementById('hiddenName').value}</p>
-          <p><strong>Enrollment:</strong> ${document.getElementById('hiddenEnrollment').value}</p>
-          <p><strong>Department:</strong> ${document.getElementById('hiddenDepartment').value}</p>
-          <p><strong>Instagram:</strong> @${document.getElementById('hiddenInstagram').value}</p>
-          <p><strong>Caption:</strong> "${document.getElementById('caption').value}"</p>
-          <p><strong>Payment Code:</strong> ${document.getElementById('hiddenPaymentCode').value}</p>
-        `;
-        document.getElementById('submissionSummary').innerHTML = summary;
-        document.getElementById('confirmationModal').style.display = 'flex';
-      }
-
-      function sendToWhatsApp() {
-        const message =
-          `📸 *CURUMA Photo Contest Submission* 📸\n\n` +
-          `👤 *Name:* ${document.getElementById('hiddenName').value}\n` +
-          `🎓 *Enrollment:* ${document.getElementById('hiddenEnrollment').value}\n` +
-          `🏛️ *Department:* ${document.getElementById('hiddenDepartment').value}\n` +
-          `📱 *Instagram:* @${document.getElementById('hiddenInstagram').value.replace('@', '')}\n\n` +
-          `✏️ *Caption:* "${document.getElementById('caption').value}"\n` +
-          `💰 *Payment Code:* ${document.getElementById('hiddenPaymentCode').value}\n\n` +
-          `_Please find the photo attached in the next message_`;
-
-        const encoded = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/918547432287?text=${encoded}`;
-
-        const formData = new FormData(document.getElementById('uploadForm'));
-        fetch('/submit', {
+        fetch("https://script.google.com/macros/s/AKfycbxvxE1uq5kAjlmG9ZJrDjPZtyPT3blbhyqt_kTCMHdGTvnEoM52NoqZvG0YDYBf13dMfA/exec", {
           method: 'POST',
           body: formData
         })
-          .then(res => {
-            if (!res.ok) throw new Error('Submission failed');
-            window.open(whatsappUrl, '_blank');
-            document.getElementById('confirmationModal').style.display = 'none';
-          })
-          .catch(err => {
-            console.error(err);
-            window.open(whatsappUrl, '_blank');
-            document.getElementById('confirmationModal').style.display = 'none';
-          });
+        .then(res => {
+          if (!res.ok) throw new Error('Network response was not ok');
+          return res.json();
+        })
+        .then(result => {
+          alert('✅ Submission successful! Thank you for participating.');
+          window.location.href = '/thank-you.html'; // Optional redirect page
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('❌ Error submitting form. Please try again later.');
+        });
       }
     });
   </script>
